@@ -29,7 +29,10 @@ public class URLController {
         myURL.setCreatedAt(thisInstant);
         myURL.setUpdatedAt(thisInstant);
         myURL.setLongURL(urlDto.getUrl());
-        String shortenedURL = ShortenURL.encode(urlDto.getUrl());
+        String shortenedURL;
+        do {
+            shortenedURL = ShortenURL.encode(urlDto.getUrl());
+        } while (urlRepository.findByShortCode(shortenedURL).isPresent());
         myURL.setShortCode(shortenedURL);
         urlRepository.save(myURL);
         return new ResponseEntity<>(myURL, HttpStatus.CREATED);
@@ -44,11 +47,6 @@ public class URLController {
         myURL.get().setAccessCount(myURL.get().getAccessCount() + 1);
         urlRepository.save(myURL.get());
         return new ResponseEntity<>(myURL.get().getLongURL(), HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<?> getAllURLs() {
-        return new ResponseEntity<>(urlRepository.findAll(), HttpStatus.OK);
     }
 
     @PutMapping("{shortCode}")
