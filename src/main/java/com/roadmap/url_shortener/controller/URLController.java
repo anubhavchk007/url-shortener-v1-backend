@@ -46,7 +46,7 @@ public class URLController {
         }
         myURL.get().setAccessCount(myURL.get().getAccessCount() + 1);
         urlRepository.save(myURL.get());
-        return new ResponseEntity<>(myURL.get().getLongURL(), HttpStatus.OK);
+        return new ResponseEntity<>(myURL.get(), HttpStatus.OK);
     }
 
     @PutMapping("{shortCode}")
