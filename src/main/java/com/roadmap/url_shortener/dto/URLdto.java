@@ -1,6 +1,5 @@
 package com.roadmap.url_shortener.dto;
 
-import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
